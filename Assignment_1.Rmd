@@ -1,0 +1,102 @@
+---
+title: "Stat 260 Assignment #1"
+date: "04/02/2022"
+output: word_document
+---
+{Huber, Eric}
+{V00980396}
+STAT 260 Assigment {#1}
+Instructor: Chi Kou
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+rm(list = ls())
+```
+
+## Question 1
+```{r reading in data}
+Cal1_Scores <- scan()
+# Input: 66 65 80 66 73 94 100 93 79 89 64 90 63 88 85 67 77 82 82 39 100 82 60 56 66 72 74 67 87 61 63 58 66 100 93 92 60 74 59 98
+# Output: Read 40 items
+
+Cal2_Scores <- scan()
+# Input: 74 77 64 63 59 69 72 57 64 55 69 40 60 54 80 45 58 60 61 71 60 61 66 74 63 71 73 99 66 63 69 69 75 47 50
+# Output: Read 35 items
+```
+Using the scan() function we are able to create vectors for each of them by copy and pasting the values into the console.
+
+### (1.a)
+```{r q1a}
+#boxplot(Cal1_Scores, Cal2_Scores, names = c("Cal 1 Scores","Cal 2 Scores"))
+```
+
+### (1.b)
+```{r q1b}
+mean(Cal1_Scores)
+sd(Cal1_Scores)
+
+mean(Cal2_Scores)
+sd(Cal2_Scores)
+```
+The mean for Cal 1 scores is 75.75 and the standard deviation is ~14.79. The mean for the Cal 2 scores is ~64.51 and the standard deviation is ~10.97.
+### (1.c)
+It appears that class 1 has done better. This class has both a higher median and mean than class 2. While the the spread of the data and standard deviation is higher the difference is not drastic enough for me to argue that class 2 did better.
+
+
+## Question 2
+```{r q2}
+set.seed(24689)
+simvector = rnorm(200, 10, 2)
+summary(simvector)
+```
+
+### (2.a)
+```{r q2a}
+hist(simvector)
+boxplot(simvector)
+```
+
+### (2.b)
+```{r q2b}
+IQR(simvector)
+```
+The inerquartile range is ~2.45
+
+### (2.c)
+```{r q2c}
+quantile(simvector, 0.25)-(1.5*IQR(simvector))
+quantile(simvector, 0.75)+(1.5*IQR(simvector))
+               
+```
+The lower limit is ~5.04 and the upper limit is ~7.49.
+
+### (2.d) 
+The data set simvector is asymmetric, unimodal, and negatively skewed. 
+
+
+## Question 3
+```{r q3}
+x = scan()
+# Input: 77 50 71 72 81 94 96 95 67
+# Output: Read 9 items
+
+y = scan()
+# Input: 82 66 78 34 47 85 90 99 68
+# Output: Read 9 items
+
+```
+### (3a)
+```{r q3a, eval=FALSE, include=FALSE}
+#plot(x, y)
+```
+
+### (3.b)
+```{r q3b}
+cor(x,y)
+```
+The correlation coefficient is ~0.51 meaning there is a positive relationship.
+
+### (3.c)
+For our Physics test scores the correlation coefficient is positive which indicates an increasing relationship. The value is roughly ~0.5 which tells us that the linear relationship between midterm and final marks is not particularly strong.
+
+
