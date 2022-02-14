@@ -1,5 +1,5 @@
 ---
-title: "HomeworkAssigment#1"
+title: "HomeworkAssignment#1"
 author: "Eric Huber"
 date: "01/02/2022"
 output: word_document
