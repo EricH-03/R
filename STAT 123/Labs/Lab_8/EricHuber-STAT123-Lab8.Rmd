@@ -1,0 +1,88 @@
+---
+title: "Lab 8 - STAT 123"
+author: "Eric Huber"
+date: "23/03/2022"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+## Question 1:
+
+### (1.a)
+```{r, q1a}
+df = read.csv("nba_player_data_2020.csv")
+```
+
+### (1.b)
+```{r, q1b}
+df = na.omit(df)
+row_sub = apply(df, 1, function(row) all(row!=0))
+df = df[row_sub,]
+```
+
+### (1.c)
+```{r, q1c}
+dfc = df[, c(13:16,18:20)]
+```
+
+
+## Question 2:
+
+```{r, q2}
+colours = c("dodgerblue", "firebrick1", "green3", "orange", "salmon", "slateblue1")
+
+cnames = c("2pt makes", "2pt attempts", "2pt %", "FT makes", "Ft attempts", "FT %")
+
+par(mfrow= c(2,3))
+par(mar = c(5.1, 4.1, 5.1,2.1))
+n = dim(dfc)[1]
+m = dim(dfc)[2]
+
+for(i in 2:m){
+  ttl = paste("3pt % vs", cnames[i-1])
+  plot(dfc[,i], dfc[,1], main = ttl, ylab = "3pt %", col = colours[i-1], xlab = cnames[i-1])
+  
+  i = i+1
+  
+}
+mtext("Correlation Plots", side = 3, line = -1.5, outer = TRUE)
+```
+
+## Question 3:
+```{r, q3}
+### a
+cor_vec = numeric()
+
+### b
+for(k in 1:m){
+  cor_vec[k] = cor(dfc[,1],dfc[,k])
+  
+  k = k+1
+}
+
+### c
+names(cor_vec) = c("3pt %", cnames)
+
+### d
+cor_vec
+
+```
+
+
+## Question 4:
+```{r, q4}
+## a
+easy_way = cor(dfc)[,1]
+names(easy_way) = c("3pt %", cnames)
+
+## b 
+easy_way
+```
+(4.c) Besides 3pt % which is of course perfectly and positively correlated, the most positively correlated is the free throw percentage (FT %).
+
+
