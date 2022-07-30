@@ -1,0 +1,79 @@
+---
+title: "Lab_3"
+author: "Eric Huber"
+date: "09/02/2022"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+```{r q1ab}
+#a
+proj.df = read.csv("FantasyProjections.csv")
+
+
+#b
+nrow(proj.df)
+ncol(proj.df)
+
+```
+(1.b) There are 297 observations (rows) and 9 variables (columns)
+
+```{r q1c}
+mnftps = mean(proj.df$Fpts)
+mnftps
+
+medftps = median(proj.df$Fpts)
+medftps
+```
+
+(1.c) The mean of Ftps is ~15.3 and the median is ~14.2
+
+## Question 2
+
+(2.a)
+```{r q2a}
+
+#a
+proj.df$Name[which.min(proj.df$Value)]
+
+```
+
+```{r q2b}
+#b
+proj.df$Name[which.max(proj.df$Value)]
+
+```
+
+```{r q2c}
+#c
+proj.df[which.max(proj.df$Fpts), c("Name", "Position")]
+
+```
+
+## Question 3
+```{r q3a}
+#a
+given = 0
+above.average.df = proj.df[proj.df$Value > given,]
+```
+
+
+```{r q3b}
+#b
+break.line = mean(above.average.df$Fpts)
+
+```
+
+```{r q3c}
+#c
+the.top = above.average.df[above.average.df$Fpts > break.line, "Name"]
+```
+
+
+
+

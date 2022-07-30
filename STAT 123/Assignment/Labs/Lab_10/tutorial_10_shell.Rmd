@@ -1,0 +1,96 @@
+---
+title: "Tutorial 10"
+author: "Steve Hof"
+date: "07/04/2021"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+#setwd("~/Documents/School/Winter_2021/Tutoring/STAT_123/Tutorials/Tutorial_10")
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+```
+
+```{r data}
+df = read.csv(file = "randle_stats.csv")
+dfa = read.csv(file = "randle_advanced.csv")
+```
+
+```{r functions}
+calc = function(x) {
+  threes = x$X3P * 3
+  twos = x$FG * 2
+  ft = x$FT 
+  rbd = x$TRB * 1.2
+  blk = x$BLK * 2
+  stl = x$STL * 2
+  to = x$TOV * -1
+  ass = x$AST * 1.5
+  return(threes + twos + ft + rbd + blk + stl + to + ass)
+}
+```
+
+```{r clean, warning=FALSE}
+# clean df data
+df$MP = gsub(":", ".", df$MP)
+df$X = gsub("@", "away", df$X)
+df$X[!nzchar(df$X)] = "home"
+
+df = df %>% select(-c(Date, Age, Tm, Rk, G, X.1))
+cols.num = c("GS", "MP", "FG", "FGA", "FG.", "X3P", "X3PA", "X3P.",
+             "FT", "FTA", "FT.", "ORB", "DRB", "TRB", "AST", "STL",
+             "BLK", "TOV", "PF", "PTS", "GmSc", "X...")
+df[cols.num] = sapply(df[cols.num], as.numeric)
+df$fpts = calc(df)
+
+#clean dfa data
+dfa$MP = gsub(":", ".", dfa$MP)
+dfa$X = gsub("@", "away", dfa$X)
+dfa$X[!nzchar(dfa$X)] = "home"
+
+dfa = dfa %>% select(-c(Date, Age, Tm, Rk, G, X.1, Opp, GS))
+cols.numa = c("MP", "TS.", "eFG.", "ORB.", "DRB.", "TRB.",
+              "AST.", "STL.", "BLK.", "TOV.", "USG.", "ORtg",
+              "DRtg", "GmSc", "BPM")
+dfa[cols.numa] = sapply(dfa[cols.numa], as.numeric)
+cols.fac = c("X")
+dfa[cols.fac] = sapply(dfa[cols.fac], as.factor)
+
+# calculate fantasy points and add as column in dfa
+dfa$fpts = df$fpts
+```
+
+```{r q1}
+fit1 = lm(fpts ~ ., data = dfa)
+summary(fit1)
+
+```
+(1.b) MP, TS., eFG., TOV., USG., ORtg and GmSc are the significant predictors 
+
+(1.c) The adjusted R-squared  value is 0.9439
+
+
+```{r q2}
+fit2 = lm(fpts ~ MP + TS. + eFG. + TOV. + USG. + ORtg + GmSc, data = dfa)
+summary(fit2)
+
+```
+(2.c) The adjusted R-squared is 0.9165
+
+(2.b) Yes, our fit1 has a higher R-squared value than our fit2, so it looks like we might have accidentaly removed something that we shouldn't have.
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,102 @@
+---
+title: "Lab_2_Worksheet"
+author: "Eric Huber"
+date: "02/02/2022"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1:
+```{r q1a}
+Fdata = read.csv("FlowerData.csv")
+Fdata
+```
+
+
+### (1.b)
+Fdata is a data frame because it stores data tables that contains multiple data types. A matrix can only store one data type and Fdata stores numbers as well as characters therefore it must be a dataframe.
+
+
+### (1.c)
+```{r q1c}
+FlowerMatrix = as.matrix(Fdata[ ,2:3])
+```
+
+
+### (1.d)
+```{r q1d}
+colnames(FlowerMatrix) <- c("Age (in days)", "Height (in cm)")
+```
+
+
+### (1.e)
+```{r q1e}
+rownames(FlowerMatrix) = c(Fdata$Individual)
+```
+
+
+## Question 2:
+
+### (2.a)
+```{r q2a}
+mean(Fdata$Age)
+```
+The average age is ~37.42 days
+
+### (2.b)
+```{r q2b}
+mean(Fdata$Height..cm.)
+```
+The average height is ~11.88 centimeters
+
+### (2.c)
+```{r q2c}
+max(Fdata$Height..cm.)
+max(Fdata$Age..days.)
+```
+The tallest flower is 19 centimeters tall and the oldest flower is 48 days old
+
+### (2.d)
+```{r q2d}
+min(Fdata$Height..cm.)
+min(Fdata$Age..days.)
+```
+The shortest flower is 4 centimeters tall and the youngest flower is 26 years old.
+
+### (2.e)
+The tallest flower from part c is yellow. The oldest flower from part c is also yellow. The shortest flower from part d is red. The youngest flower from part d is also yellow.
+
+
+
+## Question 3:
+
+### (3.a)
+```{r q3a}
+n = nrow(FlowerMatrix)
+```
+There are 45 rows in the matrix
+
+
+### (3.b)
+```{r q3b}
+Samp = sample(1:nrow(FlowerMatrix), 15)
+
+
+```
+
+### (3.c)
+```{r q3c}
+SampleMatrix = matrix(c(FlowerMatrix[Samp, ]), nrow=15)
+colnames(SampleMatrix) <- c("Age (in days)", "Height (in cm)")
+
+```
+
+
+### (3.d)
+```{r q3d}
+colMeans(SampleMatrix)
+```
+The sample average age of the flowers is ~37.07 days and the sample average height is ~11.03 cm. These results are very similar to the results found in questions 2 a/b but they are both just a bit under the actual value. That being said depending on the sample these values could fluctuate dramatically
