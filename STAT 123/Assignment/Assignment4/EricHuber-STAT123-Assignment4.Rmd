@@ -1,0 +1,148 @@
+---
+title: "STAT 123 Assignment 4"
+author: "Eric Huber"
+date: "03/04/2022"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Question 1:
+```{r, q0}
+AdmissionsPredict = read.csv("AdmissionPredict.csv")
+
+#We can exclude "serial No." because it is just a way of indexing which is already built in
+AdmissionsPredict = AdmissionsPredict[,2:8]
+```
+
+
+```{r, q1}
+y = AdmissionsPredict$Chance.of.Admit
+
+#a
+xnames = colnames(AdmissionsPredict[,1:6])
+
+
+#b
+par(mfrow = c(2,3))
+colours = c("dodgerblue", "firebrick1", "green3", "orange", "salmon", "slateblue1", "darkblue")
+m = dim(AdmissionsPredict)[2] -1
+for(i in 1:m){
+  plot(AdmissionsPredict[,i], AdmissionsPredict[,7], ylab = "# of Chance of Admit", col = colours[i], xlab = xnames[i])
+  
+  i = i+1
+}
+
+
+#c
+cornum = numeric()
+for(i in 1:m){
+ cornum[i] = cor(AdmissionsPredict[,i], AdmissionsPredict[,7])
+}
+cornum
+```
+(1.c) The explanatory variables which we are most easily able to identify the form is the GRE.Score, TOEFL.Score and UGPA. All three of which look to be positive with a linear form. The clearest and strongest one is the UPGA. This is also reflected in our correlation calculation.
+
+```{r, q1d}
+full_model = lm(Chance.of.Admit ~ GRE.Score + TOEFL.Score + University.Rating + SOP + LOR + UGPA  , data = AdmissionsPredict)
+summary(full_model)
+```
+(1.d) y = -1.4138594 + 0.0022761(x1) + 0.0027534(x2) + 0.0060620(x3) - 0.0019614(x4) + 0.0227486(x5) + 0.1198749(x6)
+
+
+```{r, q1e}
+summary(full_model)
+```
+(1.e) No, not all terms are significant. We can see from looking at our summary() that "SOP" and "University.Rating" could be removed from our model.
+
+
+```{r, q1f}
+new_model = lm(Chance.of.Admit ~ GRE.Score + TOEFL.Score + LOR + UGPA  , data = AdmissionsPredict)
+summary(new_model)
+```
+(1.f) y = -1.4630686  + 0.0023179(x1) + 0.0029252(x2) + 0.0239713(x3) + 0.1228233(x4)
+
+
+
+(1.g)
+```{r, q1g}
+print("GRE.Score Range")
+range(AdmissionsPredict$GRE.Score)
+
+print("TOEFL.Score Range")
+range(AdmissionsPredict$TOEFL.Score)
+
+print("University.Rating Range")
+range(AdmissionsPredict$University.Rating)
+
+print("SOP Range")
+range(AdmissionsPredict$SOP)
+
+print("LOR Range")
+range(AdmissionsPredict$LOR)
+
+print("UGPA Range")
+range(AdmissionsPredict$UGPA)
+```
+
+(1.h)
+```{r, q1h}
+y = (-1.4630686  + 0.0023179*(320) + 0.0029252*(101) + 0.0239713*(4) + 0.1228233*(8.4))*100
+y
+
+```
+There is roughly a 70.17% chance that the student gets accepted into the graduate program.
+
+
+## Question 2:
+```{r, q2.0}
+age = c(2,3,4,5,8,11,14,17,21,28,38,50,67,83)
+
+speed = c(65,58,40,37,32,26,18,16,17,17,23,29,42,59)
+```
+
+
+(2.a) Since we are trying to determine the relationship between ages (in years) and speed (in seconds). We need to use speed as the response variable and age as the explanatory variable.
+
+(2.b)
+```{r, q2b}
+plot(age,speed)
+```
+The form appears to be Quadratic.
+
+
+
+```{r,q2c}
+age2 = age^2
+age3 = age^3
+
+cor(speed, age+age2)
+cor(speed, age+age2+age3)
+
+FourC_Model = lm(speed ~ age + age2 + age3
+                 )
+summary(FourC_Model)
+```
+(2.c) y = 61.4882398 -3.9793958(x) + 0.0960492(x)^2 - 0.0005889(x)^3
+
+
+
+(2.d)
+```{r, q2d}
+y =  61.4882398 -3.9793958*(70) + 0.0960492*(70)^2 - 0.0005889*(70)^3
+y
+```
+It would take a 70 year old approx ~51.58 seconds to run that distance.
+
+(2.e) Roughly 87.6% of the response variable variation can be explained by the explanatory variable in my model.
+
+
+
+
+
+
+

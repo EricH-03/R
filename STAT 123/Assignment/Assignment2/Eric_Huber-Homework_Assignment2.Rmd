@@ -1,0 +1,132 @@
+---
+title: "STAT123_Assignment2"
+author: "Eric Huber"
+date: "14/02/2022"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, read}
+data("Titanic")
+NHLData =read.csv("NHLData.csv")
+?Titanic
+```
+
+## Question 1:
+
+### (1.a) Create (and print out) a table which contains the adult passengers (of all classes and genders) who survived
+```{r, q1a}
+
+AdultPas = as.table(Titanic[1:4, ,2,2])
+AdultPas
+
+```
+
+### (1.b) Create (and print out) a vector called survived which contains the adult passengers who survived. Hint: You may need to use rowSums() on your answer from part (a).
+```{r, q1b}
+
+survived = rowSums(AdultPas)
+survived
+
+```
+
+### (1.c) Create a barplot displaying the survived vector. Make sure to include a main title and to label your x-axis. Also, make sure that each bar is a different colour.
+```{r, q1c}
+barplot(survived, main = "Adult Survivors of the Titanic", xlab = "Passenger Type", ylab ="Number of Surviors", col = c("darkblue", "red", "green", "orange"))
+
+```
+
+### (1.d)  What does the bar graph imply about the survival of adult passengers based on class?
+It implies that the Crew had the most survivors followed closely by the 1st class and that the 3rd class had more survivors than the 2nd class.
+
+### (1.e) Create (and print out) a vector called died which contains the adult passengers who did not survive.
+```{r q1e}
+
+died = c(rowSums(as.table(Titanic[1:4,1:2,2,1])))
+died
+
+```
+
+
+### (1.f) Create (and print out) a vector called percent. Survived which contains the percentage of adult passengers who survived in each class.
+```{r, q1f}
+total = sum(survived)
+
+percent.Survived = (survived/total)*100
+percent.Survived
+
+
+```
+
+
+### (1.g)  Create a pie chart that displays the percent.Survived data. Be sure to include a main title for your pie chart.
+```{r, q1g}
+
+pie(percent.Survived, main= "Percent of Adult Passengers that Survived")
+
+```
+
+
+### (1.h)What does the pie chart imply about the survival of the adult passengers based on class? Does this imply something different than the bar graph did? If yes, why?
+The pie chart tells us that if you are a crew member you have the highest percent chance of surviving, followed closely by 1st class, 3rd class and finally 2nd class. This implies largely the same thing, it implies that you have highest percent chance of surviving if you were a crew member, followed by 1st, 3rd and 2nd class.
+
+
+## Question 2:
+
+### (2.a) Create (but do not print) a vector called points containing the number of points for each player (the variable P in the data set).
+
+```{r, q2a}
+points = c(NHLData$P)
+```
+
+
+
+### (2.b)Create a histogram displaying the distribution of this variable. Be sure to have both a main title and a title on your x-axis. Also, make sure that the scale on the x axis goes to 30 and the scale on the y axis goes to 400.
+```{r q2b}
+hist(points,
+     main= "Points",
+     xlab="Number of Points",
+     xlim = c(0,30),
+     ylim = c(0,400),
+     col="darkmagenta")
+```
+
+
+### (2.c) Describe the shape of the distribution (symmetric, left-skewed, right-skewed.
+The distribution is unimodal, asymmetric and extremely right skewed.
+
+### (2.d) What is an appropriate measure of the center of the distribution (mean or median), why?
+I believe the median would be a more appropriate due to the fact that it isn't impacted by outliers in our data like the mean calculation would be.
+
+
+### (2.e) Compute the appropriate center value and the corresponding measures of variability
+```{r, q2e}
+median(points) #Center Value
+summary(points)
+IQR(points) # Interquartile Range 
+var(points) # Variance
+sqrt(var(points)) # Standard Deviation
+range(points) # Range
+
+```
+
+## Question 3:
+Consider the following sample of points from the NHL data set:
+```{r, q3}
+GivenSample = c(3,1,8,5,3,1,2,0,5,2,0,1,3,3,2,1,11,0,6,1)
+
+```
+
+
+### (3.a) Create a stemplot of the distribution of the sample.
+```{r, q3a}
+stem(GivenSample)
+```
+
+
+### (3.b) Does the distribution resemble the one seen in question 2? Explain why there might be some differences.
+The distribution does resemble the one seen earlier but there are some differences. Since we are taking a small sample from the entire set some of the data will not be represented. The range in question 3 is also a lot smaller due to this reason, as it will be less likely to select the outliers in our data.
+
