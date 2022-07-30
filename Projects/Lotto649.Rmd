@@ -1,0 +1,45 @@
+---
+title: "Lotto649"
+author: "Eric Huber"
+date: "13/02/2022"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Here we read in the spreadsheet of lotto numbers I made on Feb 13th 2022
+```{r read}
+LottoNums = read.csv("Lotto_6_49 Numbers(up-to-2009).csv")
+
+```
+
+Creating a mode function
+```{r createmode}
+Modes <- function(x) {
+  ux <- unique(x)
+  tab <- tabulate(match(x, ux))
+  ux[tab == max(tab)]
+}
+
+## Find the most common number in each col
+Num_1MostCom = getMode(LottoNums[, 2])
+Num_2MostCom = getMode(LottoNums[, 3])
+Num_3MostCom = getMode(LottoNums[, 4])
+Num_4MostCom = getMode(LottoNums[, 5])
+Num_5MostCom = getMode(LottoNums[, 6])
+Num_6MostCom = getMode(LottoNums[, 7])
+Bonus_NumMostCom = getMode(LottoNums[, 8]) 
+
+Num_1MostCom
+Num_2MostCom
+Num_3MostCom 
+Num_4MostCom 
+Num_5MostCom 
+Num_6MostCom
+Bonus_NumMostCom
+
+
+```
+
