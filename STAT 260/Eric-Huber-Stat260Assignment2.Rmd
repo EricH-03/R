@@ -1,0 +1,122 @@
+---
+title: 'R Assignment #2'
+author: "Eric Huber"
+date: "13/03/2022"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Huber, Eric
+V00980396
+STAT 260 Assignment #2
+Instructor: Chi Kou
+
+
+
+## Question 1:
+
+
+### (1.a)
+```{r, q1a}
+ppois(25, lambda = 8*4.5)
+```
+
+### (1.b)
+```{r, q1b}
+dpois(30, lambda = 8*4.5)
+
+```
+### (1.c)
+```{r, q1c}
+(ppois(34,lambda = 8*4.5)-ppois(30, lambda = 8*4.5))/(1-ppois(30, lambda = 8*4.5))
+```
+
+
+## Question 2:
+
+
+### (2.a)
+```{r, q2a}
+
+pbinom(3, size = 100,prob = 0.017, lower.tail = FALSE)
+```
+
+### (2.b)
+```{r, q2b}
+ppois(3, lambda = 100*0.017, lower.tail = FALSE)
+
+```
+
+
+## Question 3:
+
+
+### (3.a)
+```{r, q3a}
+pnorm(30.7, mean = 28.6, sd =1.25)- pnorm(27.8, mean = 28.6, sd = 1.25)
+```
+
+### (3.b)
+```{r, q3b}
+pnorm(29.5, mean = 28.6, sd = 1.25)
+```
+
+### (3.c)
+```{r, q3c}
+(pnorm(30.5, mean = 28.6, sd = 1.25) - pnorm(29, mean = 28.6, sd = 1.25))/(1-pnorm(29, mean = 28.6, sd = 1.25))
+```
+
+## Question 4:
+
+
+### (4.a)
+```{r, q4a}
+# mean = α*β
+5*10
+```
+The mean survival time is half a week
+
+
+### (4.b)
+```{r, q4b}
+# σ=√(var(X))=√var(X)=√(α*β^2).
+sqrt(5*10^2)
+```
+
+
+### (4.c)
+```{r, q4c}
+pgamma(30, shape = 5, scale = 10, lower.tail = FALSE)
+```
+
+
+### (4.d)
+```{r, q4d}
+pgamma(14, shape = 5, scale = 10)
+```
+
+
+## Question 5:
+```{r,q5}
+plot(0:18, dbinom(0:18, size = 18, prob = 0.33),type = "h", main = "Probability Mass Function (X ~ Bin(18, 0.33))", xlab = "x", ylab = "y")
+```
+
+
+
+## Question 6:
+```{r, q6}
+x = seq(0, 30, by= 0.01)
+y = dgamma(x, shape = 3, scale = 2)
+plot(x,y,type = "l", main = "Probability Density Function (X~Gamma(α=3, β=2)")
+```
+
+
+
+
+
+
+
+
